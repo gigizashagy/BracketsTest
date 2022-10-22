@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.0)
+project(BracketsTest)
+set(CMAKE_CXX_STANDARD_REQUIRED 17)
+set(CMAKE_CXX_STANDARD 17)
+add_executable(BracketsTest main.cpp)
