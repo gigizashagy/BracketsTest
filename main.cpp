@@ -10,8 +10,9 @@ std::map<uchar, uchar> DecayBrackets(const std::string& InString)
 	std::map<uchar, uchar> Decay;
 	for (char Literal : InString)
 	{
-		const bool Contain = Decay.find(Literal) != Decay.end();
-		Decay[Literal] = Contain ? ')' : '(';
+		const char Lower = std::tolower(Literal);
+		const bool Contain = Decay.find(Lower) != Decay.end();
+		Decay[Lower] = Contain ? ')' : '(';
 	}
 	return Decay;
 }
@@ -19,18 +20,13 @@ std::map<uchar, uchar> DecayBrackets(const std::string& InString)
 std::string ConvertToBrackets(const char* Input)
 {
 	std::string OutString = Input;
-	std::transform(OutString.begin(), OutString.end(), OutString.begin(),
-	[](char& c)
-	{
-		return std::tolower(c);
-	});
-
 	const auto BracketsMap = DecayBrackets(OutString);
 
-	for (auto& Literal : OutString)
+	std::transform(OutString.begin(), OutString.end(), OutString.begin(),
+	[&BracketsMap](char& c)
 	{
-		Literal = BracketsMap.at(Literal);
-	}
+		return BracketsMap.at(std::tolower(c));
+	});
 	return OutString;
 }
 
